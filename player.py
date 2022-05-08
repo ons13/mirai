@@ -1,9 +1,8 @@
-from tkinter.ttk import Style
 import pygame 
 from settings import *
 from support import import_folder
-
-class Player(pygame.sprite.Sprite):
+from entity import Entity
+class Player(Entity):
 	def __init__(self,pos,groups, obstacle_sprites,create_attack,destroy_attack,create_magic):
 	
 		super().__init__(groups)
@@ -55,7 +54,6 @@ class Player(pygame.sprite.Sprite):
 		self.animations = {'up': [],'down': [],'left': [],'right': [],
 			'right_idle':[],'left_idle':[],'up_idle':[],'down_idle':[],
 			'right_attack':[],'left_attack':[],'up_attack':[],'down_attack':[]}
-
 		for animation in self.animations.keys():
 			full_path = character_path + animation
 			self.animations[animation] = import_folder(full_path)
@@ -182,7 +180,6 @@ class Player(pygame.sprite.Sprite):
 			if current_time - self.magic_switch_time >= self.switch_duration_cooldown:
 				self.can_switch_magic = True
 
-
 	def animate(self):
 		animation = self.animations[self.status]
 
@@ -194,7 +191,6 @@ class Player(pygame.sprite.Sprite):
 		# set the image
 		self.image = animation[int(self.frame_index)]
 		self.rect = self.image.get_rect(center = self.hitbox.center)
-	
 
 	def update(self):
 		self.input()
